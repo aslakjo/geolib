@@ -3,19 +3,39 @@
 package no.aslakjo
 package geolib
 
-case class Point(lat:Double, long:Double){
-  def distanceTo(other:Point): Distance = {
-    import math._
+import math._
 
-    var R = 6371; // km
-    var dLat = toRadians(other.lat - lat);
-    var dLon = toRadians(other.long - long);
-    var a = sin(dLat/2) * sin(dLat/2) +
-          cos(toRadians(lat)) * cos(toRadians(other.lat)) *
-          sin(dLon/2) * sin(dLon/2);
-    var c = 2 * atan2(sqrt(a), sqrt(1-a));
-    var d = R * c;
-    Distance((d * 100).round / 100.0)
+case class Point(lat:Double, long:Double) extends Haversine{
+
+  def distanceTo(other:Point): Distance = {
+    val distance = haversine(this, other)
+    Distance((distance * 100).round / 100.0)
+  }
+
+
+  def bearingTo(other: Point) ={
+    val dLon = long - other.long
+
+    var y = sin(dLon) * cos(other.lat);
+    var x = cos(lat) * sin(other.lat) -
+            sin(lat) * cos(other.lat) * cos(dLon);
+    var bearing = toDegrees(atan2(y, x))
+
+    Bearing(bearing.round)
+  }
+
+
+}
+
+trait Haversine {
+  val EARTH_RADIUS = 6371; // km
+  def haversine(a: Point, b: Point): Double = {
+
+    val dLat = toRadians(b.lat - a.lat);
+    val dLon = toRadians(b.long - a.long);
+    val haversinA = sin(dLat/2) * sin(dLat/2) + cos(toRadians(a.lat)) * cos(toRadians(b.lat)) * sin(dLon/2) * sin(dLon/2);
+    val c = 2 * atan2(sqrt(haversinA), sqrt(1-haversinA));
+    EARTH_RADIUS * c;
   }
 }
 
@@ -27,3 +47,4 @@ object Path{
 
 
 case class Distance(val km:Double)
+case class Bearing(val angel:Double)
