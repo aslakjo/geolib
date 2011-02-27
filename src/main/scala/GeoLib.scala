@@ -25,6 +25,8 @@ case class Point(lat:Double, long:Double) extends Haversine{
   }
 
 
+  def to(other:Point) = new GeoVektor(this, other)
+
 }
 
 trait Haversine {
@@ -48,3 +50,8 @@ object Path{
 
 case class Distance(val km:Double)
 case class Bearing(val angel:Double)
+
+case class GeoVektor(a:Point, b:Point){
+  def distance = a.distanceTo(b)
+  def bearing = a.bearingTo(b)
+}

@@ -53,6 +53,21 @@ class GeoLibSpecs extends Spec with ShouldMatchers{
         east.bearingTo(west) should be(Bearing(90))
       }
     }
+
+    describe("GeoVektor"){
+      val pointA = Point(59.917171, 10.746002)
+      val pointB = Point(59.962574, 11.048126)
+
+      val vektor = pointA.to(pointB)
+      it("should have distance"){
+        vektor.distance should be(Distance(17.57))
+      }
+
+      it("should have bearing") {
+        vektor.bearing should be(Bearing(79))
+      }
+    }
+
   }
 
 }
