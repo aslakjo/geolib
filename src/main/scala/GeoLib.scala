@@ -42,7 +42,26 @@ trait Haversine {
 }
 
 
-class Path(val points:List[Point])
+class Path(val points:List[Point]){
+  def distance = {
+    var sum = 0.0
+    var last:Point = null
+
+    points.foreach(point => {
+
+      if(last == null){
+        last = point
+      }
+      else{
+        sum = sum + last.to(point).distance.km
+        last = point
+      }
+
+    })
+
+    Distance(sum)
+  }
+}
 object Path{
   def apply(points:List[Point]) = new Path(points.toList)
 }

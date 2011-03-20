@@ -75,6 +75,18 @@ class GeoLibSpecs extends Spec with ShouldMatchers{
       it("should have bearing") {
         vektor.bearing should be(Bearing(79))
       }
+      
+    }
+
+    describe("A long Path"){
+      val start = Point(61.231180116439326, 7.077930651783099)
+      val via = Point(61.23139522225537, 7.079800903704792)
+      val end = Point(61.230806594451764, 7.08010237550146)
+      
+      it("should calculate distance along the path"){
+        val path = Path(start :: via :: end :: Nil)
+        path.distance should be(Distance(0.17))
+      }
     }
 
   }
