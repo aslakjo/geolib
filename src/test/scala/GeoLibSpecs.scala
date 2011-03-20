@@ -13,6 +13,7 @@ class GeoLibSpecs extends Spec with ShouldMatchers{
         point.lat should be (10.1000)
         point.long should be (60.1000)
       }
+
     }
 
     describe("Path"){
@@ -35,6 +36,14 @@ class GeoLibSpecs extends Spec with ShouldMatchers{
       it ("no distance should be 0"){
         val pointA = Point(59.917171, 10.746002)
         pointA.distanceTo(pointA) should be(Distance(0))
+      }
+
+
+      it("should calculate job to home distance"){
+        val pointA = Point(59.903683, 10.739093)
+        val pointB = Point(59.947296, 10.822252)
+
+        pointA.distanceTo(pointB) should be(Distance(6.71))
       }
     }
 
