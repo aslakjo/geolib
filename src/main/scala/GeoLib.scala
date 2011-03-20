@@ -45,18 +45,12 @@ trait Haversine {
 class Path(val points:List[Point]){
   def distance = {
     var sum = 0.0
-    var last:Point = null
-
-    points.foreach(point => {
-
-      if(last == null){
-        last = point
-      }
-      else{
-        sum = sum + last.to(point).distance.km
-        last = point
+    points.foldRight[Point](null)( (next:Point, last:Point) => {
+      if(last != null && next != null){
+        sum = sum + last.to(next).distance.km
       }
 
+      next
     })
 
     Distance(sum)
