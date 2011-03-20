@@ -10,8 +10,8 @@ class GeoLibSpecs extends Spec with ShouldMatchers{
       it ("should have a lat and a long"){
         val point = new Point(10.1000, 60.1000)
 
-        point.lat should be (10.1000)
-        point.long should be (60.1000)
+        point.lat should be (Lat(10.1000))
+        point.long should be (Long(60.1000))
       }
 
     }

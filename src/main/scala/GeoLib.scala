@@ -6,12 +6,18 @@ package object geolib{
 
 
   implicit def distance2km(distance: Distance) = distance.km
+
+  implicit def lat2double(lat:Lat) = lat.double
+  implicit def double2lat(double:Double) = Lat(double)
+  implicit def lat2double(long:Long) = long.double
+  implicit def double2long(double:Double) = Long(double)
+
 }
 
 package geolib{
     import math._
 
-    case class Point(lat:Double, long:Double) extends Haversine{
+    case class Point(lat:Lat, long:Long) extends Haversine{
 
     def distanceTo(other:Point): Distance = {
       val distance = haversine(this, other)
@@ -66,6 +72,8 @@ package geolib{
     def apply(points:List[Point]) = new Path(points.toList)
   }
 
+  case class Lat(val double:Double)
+  case class Long(val double:Double)
 
   case class Distance(val km:Double)
   case class Bearing(val angel:Double)
