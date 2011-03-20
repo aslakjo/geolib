@@ -89,6 +89,15 @@ class GeoLibSpecs extends Spec with ShouldMatchers{
       }
     }
 
+    describe("Implicit methods") {
+      it("should be usefull when working with km") {
+        import no.aslakjo.geolib._
+        val start = Point(61.231180116439326, 7.077930651783099)
+        val kms :Double = start.to(start).distance
+        kms should be (0.0)
+      }
+    }
+
   }
 
 }
