@@ -2,7 +2,6 @@
 geolib.iml
 lib_managed/
 project/boot/
-project/build.properties
 project/build/target/
 project/sbt_project_definition.iml
 target/
